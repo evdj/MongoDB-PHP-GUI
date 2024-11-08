@@ -3,6 +3,7 @@
 namespace MPG;
 
 use MongoDB\Client;
+use MongoDB\Driver\Manager;
 use \MongoDB\BSON\Regex;
 
 /**
@@ -132,6 +133,72 @@ class MongoDBHelper {
         $regexFlags = $regexParts[2];
 
         return new Regex($regexPattern, $regexFlags);
+
+    }
+
+    /**
+     * MongoDB Manager singleton instance.
+     * 
+     * @var null|MongoDB\Client
+     */
+    private static $manager;
+
+    /**
+     * Creates a MongoDB manager.
+     * 
+     * @throws \Exception
+     * @return MongoDB\Manager
+     */
+    private static function createManager() : Manager {
+
+        if ( !isset($_SESSION['mpg']['user_is_logged']) ) {
+            throw new \Exception('Session expired. Refresh browser.');
+        }
+
+        if ( isset($_SESSION['mpg']['mongodb_uri']) ) {
+
+            $managerUri = $_SESSION['mpg']['mongodb_uri'];
+
+        } else {
+            
+            $managerUri = 'mongodb://';
+
+            if ( isset($_SESSION['mpg']['mongodb_user'])
+                && isset($_SESSION['mpg']['mongodb_password'])
+            ) {
+                $managerUri .= rawurlencode($_SESSION['mpg']['mongodb_user']) . ':';
+                $managerUri .= rawurlencode($_SESSION['mpg']['mongodb_password']) . '@';
+            }
+    
+            $managerUri .= $_SESSION['mpg']['mongodb_host'];
+    
+            if ( isset($_SESSION['mpg']['mongodb_port']) ) {
+                $managerUri .= ':' . $_SESSION['mpg']['mongodb_port'];
+            }
+            // When it's not defined: port defaults to 27017.
+    
+            if ( isset($_SESSION['mpg']['mongodb_database']) ) {
+                $managerUri .= '/' . $_SESSION['mpg']['mongodb_database'];
+            }
+
+        }
+
+        return new Manager($managerUri);
+
+    }
+
+    /**
+     * Gets MongoBD manager singleton instance.
+     * 
+     * @return MongoDB\Manager
+     */
+    public static function getManager() : Manager {
+
+        if ( is_null(self::$manager) ) {
+            self::$manager = self::createManager();  
+        }
+
+        return self::$manager;
 
     }
 

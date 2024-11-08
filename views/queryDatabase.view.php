@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="./assets/css/codemirror-show-hint.min.css">
     <link rel="stylesheet" href="./assets/css/jsonview.bundle.css">
     <link rel="stylesheet" href="./source/css/inner.css">
+    <link rel="stylesheet" href="./source/css/caret.css">
 
     <script src="./assets/js/codemirror.min.js"></script>
     <script src="./assets/js/codemirror-js-mode.js"></script>

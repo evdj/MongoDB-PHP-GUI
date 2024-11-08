@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./assets/css/fontawesome-custom.css">
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="./source/css/inner.css">
+    <link rel="stylesheet" href="./source/css/caret.css">
 
     <script src="./assets/js/vis-network.min.js"></script>
 

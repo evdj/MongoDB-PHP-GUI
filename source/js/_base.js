@@ -186,15 +186,16 @@ MPG.reloadCollections = function(databaseName) {
             collectionsList.innerHTML = '';
             MPG.collectionName = '';
 
-            JSON.parse(response).forEach(function(collectionName) {
+            JSON.parse(response).forEach(function(collection) {
 
                 collectionsList.innerHTML +=
                     '<li class="collection-name">'
                         + '<i class="fa fa-file-text" aria-hidden="true"></i> '
                         + '<a class="mpg-collection-link" '
-                        + 'data-collection-name="' + collectionName
-                        + '" href="#' + MPG.databaseName + '/' + collectionName + '">'
-                        + collectionName
+                        + 'data-collection-name="' + collection.name
+                        + '" href="#' + MPG.databaseName + '/' + collection.name + '">'
+                        + collection.name
+                        + ((typeof(collection.count) == 'number') ? ' (' + collection.count + ')' : '')
                         + '</a>'
                     + '</li>';
                 
@@ -268,7 +269,7 @@ MPG.eventListeners.addCollections = function() {
         collectionLink.addEventListener('click', function(_event) {
             
             MPG.collectionName = collectionLink.dataset.collectionName;
-            MPG.helpers.completeNavLinks('#' + MPG.databaseName + '/' + MPG.collectionName);
+            MPG.helpers.completeNavLinks('#' + MPG.databaseName + '/' + MPG.collectionName.name);
 
             document.querySelectorAll('.mpg-collection-link').forEach(function(collectionLink) {
                 collectionLink.classList.remove('active');

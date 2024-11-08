@@ -31,19 +31,26 @@ class CollectionsController extends Controller {
                 $decodedRequestBody['databaseName']
             );
 
-            $collectionNames = [];
+            $collections = [];
 
             foreach ($database->listCollections() as $collectionInfo) {
-                $collectionNames[] = $collectionInfo['name'];
+                $name = $collectionInfo['name'];
+                $coll = $database->selectCollection($name);
+                $count = null;
+                try {
+                    $count = $coll->countDocuments();
+                } catch (\Exception $e) {
+                }
+                $collections[] = [ "name" => $name, "count" => $count ];
             }
 
         } catch (\Throwable $th) {
             return new JsonResponse(500, ErrorNormalizer::normalize($th, __METHOD__));
         }
 
-        sort($collectionNames);
+        sort($collections);
 
-        return new JsonResponse(200, $collectionNames);
+        return new JsonResponse(200, $collections);
 
     }
 

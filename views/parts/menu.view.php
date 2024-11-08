@@ -12,6 +12,7 @@
         <a class="nav-item nav-link<?php echo ('queryDocuments' === $viewName) ? ' active' : ''; ?>" data-canonical-url="./queryDocuments" href="./queryDocuments">Query documents</a>
         <a class="nav-item nav-link<?php echo ('manageIndexes' === $viewName) ? ' active' : ''; ?>" data-canonical-url="./manageIndexes" href="./manageIndexes">Manage indexes</a>
         <a class="nav-item nav-link<?php echo ('manageUsers' === $viewName) ? ' active' : ''; ?>" data-canonical-url="./manageUsers" href="./manageUsers">Manage users</a>
+        <a class="nav-item nav-link<?php echo ('systemStatus' === $viewName) ? ' active' : ''; ?>" data-canonical-url="./systemStatus" href="./systemStatus">System status</a>
         <a class="nav-item nav-link" href="./logout">Logout</a>
     </div>
 

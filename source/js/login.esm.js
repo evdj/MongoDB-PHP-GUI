@@ -3,27 +3,38 @@
  */
 class UnsplashImage {
 
-  constructor(imageID, authorID, authorName) {
+  constructor(imageID, authorID, authorName, url) {
 
     this.imageID = imageID
     this.imageURL = `https://source.unsplash.com/${imageID}/1920x1080`
     this.authorID = authorID
     this.authorName = authorName
     this.authorURL = `https://unsplash.com/@${authorID}`
+    if ((typeof(url) == 'string') && (url.length > 10)) {
+        this.imageURL = url;
+        this.authorURL = '';
+    }
 
   }
 
   static getRandom() {
 
     const images = [
-      new UnsplashImage('pVq6YhmDPtk', 'danranwanghao', 'hao wang'),
-      new UnsplashImage('E8Ufcyxz514', 'fakurian', 'Fakurian Design'),
-      new UnsplashImage('PGdW_bHDbpI', 'fakurian', 'Fakurian Design'),
-      new UnsplashImage('26WixHTutxc', 'gradienta', 'Gradienta'),
-      new UnsplashImage('u8Jn2rzYIps', 'fakurian', 'Fakurian Design'),
-      new UnsplashImage('FBQcPsBL2Zo', 'fakurian', 'Fakurian Design'),
-      new UnsplashImage('Hlkuojv_P6I', 'enginakyurt', 'engin akyurt'),
-      new UnsplashImage('YWIOwHvRBvU', 'pawel_czerwinski', 'Pawel Czerwinski')
+      // new UnsplashImage('pVq6YhmDPtk', 'danranwanghao', 'hao wang'),
+      // new UnsplashImage('E8Ufcyxz514', 'fakurian', 'Fakurian Design'),
+      // new UnsplashImage('PGdW_bHDbpI', 'fakurian', 'Fakurian Design'),
+      // new UnsplashImage('26WixHTutxc', 'gradienta', 'Gradienta'),
+      // new UnsplashImage('u8Jn2rzYIps', 'fakurian', 'Fakurian Design'),
+      // new UnsplashImage('FBQcPsBL2Zo', 'fakurian', 'Fakurian Design'),
+      // new UnsplashImage('Hlkuojv_P6I', 'enginakyurt', 'engin akyurt'),
+      // new UnsplashImage('YWIOwHvRBvU', 'pawel_czerwinski', 'Pawel Czerwinski'),
+      // new UnsplashImage('', '', '', 'https://spf13.com/p/9-mongodb-2.6-drivers-released/ash-from-modern-afflatus-NQ6Lh81BTRs-unsplash.jpg' ),
+      // new UnsplashImage('', '', '', 'https://unsplash.com/photos/a-black-and-white-photo-of-a-cross-in-the-middle-of-a-picture-WEizaiwLk1k' )
+      // new UnsplashImage('', '', '', 'assets/images/backgrounds/white-vehicle-1920.jpg' ),
+      new UnsplashImage('', '', '', 'assets/images/backgrounds/Rottertram-caret.jpg' ),
+      new UnsplashImage('', '', '', 'assets/images/backgrounds/ash.jpg' ),
+      new UnsplashImage('', '', '', 'https://418-gersrotterdam.imgix.net/old_website/article_images/0588crop.jpg' ),
+      new UnsplashImage('', '', '', 'assets/images/login-background.jpg' )
     ]
     // Select a random image from the list above.
     const image = images[Math.floor(Math.random() * images.length)]

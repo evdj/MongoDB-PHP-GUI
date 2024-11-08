@@ -26,6 +26,11 @@ $router->post(
 );
 
 $router->get(
+    Routes::getPrefix() . '/systemStatus',
+    SystemstatusController::class . '@manage'
+);
+
+$router->get(
     Routes::getPrefix() . '/manageCollections',
     CollectionsController::class . '@manage'
 );

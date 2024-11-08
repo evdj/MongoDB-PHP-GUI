@@ -28,6 +28,36 @@ class DatabasesController extends Controller {
 
     }
 
+    public static function getSystemStatus() : array {
+
+        $serverInfo = [];
+
+        try {
+            $manager = MongoDBHelper::getManager();
+            $rp = new \MongoDB\Driver\ReadPreference('primary');
+            $server = $manager->selectServer($rp);
+
+            $ssResult = [];
+            $command = new \MongoDB\Driver\Command(['serverStatus' => 1]);
+            $ssResult = $manager->executeCommand('db', $command);
+
+            $cmdResult = [];
+            $command = new \MongoDB\Driver\Command(['replSetGetStatus' => 1]);
+            $cmdResult = $manager->executeCommand('admin', $command);
+
+        } catch (\Throwable $th) {
+            // Ingnore any error (probably rights isse)
+            // ErrorNormalizer::prettyPrintAndDie($th);
+        }
+
+        $serverInfo = [
+            'info' => $server->getInfo(), // Needs no special rights
+            'ss'  => $ssResult,           // Need more rights on admin database
+            'cmd'  => $cmdResult          // Need more rights on admin database
+        ];
+        return $serverInfo;
+    }
+
     public function visualize() : ViewResponse {
 
         AuthController::ensureUserIsLogged();
