@@ -73,7 +73,9 @@
         if (!empty($base)) {
             $major = [ 'hosts', 'setName', 'isWritablePrimary', 'secondary', 'primary', 'me', 'ok' ];
             foreach($major as $field) {
-                $newOutput[$field] = $base[$field];
+                if (array_key_exists($field, $base)) {
+                    $newOutput[$field] = $base[$field];
+                }
             }
         }
 
@@ -84,10 +86,10 @@
             $members_major = [ '_id', 'name', 'health', 'stateStr', 'syncSourceHost' ];
             foreach($repl as $base) {
                 $arrayBase = (array)$base;
-                foreach($major as $field) { $ba[$field] = $arrayBase[$field]; }
+                foreach($major as $field) { $ba[$field] = @$arrayBase[$field]; }
                 foreach($arrayBase['members'] as $idx => $member) {
                     $arrayMember = (array)$member;
-                    foreach($members_major as $field) { $ba['members'][$idx][$field] = $arrayMember[$field]; }
+                    foreach($members_major as $field) { $ba['members'][$idx][$field] = @$arrayMember[$field]; }
                 }
             }
         }
@@ -98,7 +100,7 @@
             $major = [ 'network', 'opcounters', 'repl' ];
             foreach($repl as $base) {
                 $arrayBase = (array)$base;
-                foreach($major as $field) { $ss[$field] = $arrayBase[$field]; }
+                foreach($major as $field) { $ss[$field] = @$arrayBase[$field]; }
             }
         }
     ?>
@@ -106,35 +108,38 @@
     <script>
        var systemStatus = '<?= json_encode($newOutput) ?>';
        function setSystemStatus() {
-           console.log('check 1');
-           var outputCode = document.querySelector('#mpg-output-code');
-           outputCode.innerHTML = '';
+           if (systemStatus !== 'null') {
+               var outputCode = document.querySelector('#mpg-output-code');
+               outputCode.innerHTML = '';
 
-           var jsonViewTree = JsonView.createTree(systemStatus);
-           JsonView.render(jsonViewTree, outputCode);
-           JsonView.expandChildren(jsonViewTree);
+               var jsonViewTree = JsonView.createTree(systemStatus);
+               JsonView.render(jsonViewTree, outputCode);
+               JsonView.expandChildren(jsonViewTree);
+           }
        }
 
        var serverStatus = '<?= json_encode($ss) ?>';
        function setServerStatus() {
-           console.log('check 2');
-           var outputCode = document.querySelector('#mpg-output-code2');
-           outputCode.innerHTML = '';
+           if (serverStatus !== 'null') {
+               var outputCode = document.querySelector('#mpg-output-code2');
+               outputCode.innerHTML = '';
 
-           var jsonViewTree = JsonView.createTree(serverStatus);
-           JsonView.render(jsonViewTree, outputCode);
-           JsonView.expandChildren(jsonViewTree);
+               var jsonViewTree = JsonView.createTree(serverStatus);
+               JsonView.render(jsonViewTree, outputCode);
+               JsonView.expandChildren(jsonViewTree);
+           }
        }
 
        var repliStatus = '<?= json_encode($ba) ?>';
        function setRepliStatus() {
-           console.log('check 3');
-           var outputCode = document.querySelector('#mpg-output-code3');
-           outputCode.innerHTML = '';
+           if (repliStatus !== 'null') {
+               var outputCode = document.querySelector('#mpg-output-code3');
+               outputCode.innerHTML = '';
 
-           var jsonViewTree = JsonView.createTree(repliStatus);
-           JsonView.render(jsonViewTree, outputCode);
-           JsonView.expandChildren(jsonViewTree);
+               var jsonViewTree = JsonView.createTree(repliStatus);
+               JsonView.render(jsonViewTree, outputCode);
+               JsonView.expandChildren(jsonViewTree);
+           }
        }
     </script>
 

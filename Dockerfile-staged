@@ -1,0 +1,4 @@
+FROM samueltallet/mongodb-php-gui
+
+COPY . /opt/mongodb-php-gui
+
